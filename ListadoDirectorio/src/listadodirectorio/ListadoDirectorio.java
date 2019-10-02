@@ -19,7 +19,7 @@ public class ListadoDirectorio {
     public static void main(String[] args) {
         // TODO code application logic here
 
-        String ruta = ".";
+        String ruta = "/home/alumno1920";
         if (args.length >= 1) 
         {
             ruta = args[0];
@@ -37,19 +37,21 @@ public class ListadoDirectorio {
                 System.out.println(ruta + " es un fichero.");
             } else 
             {
-                System.out.println(ruta + " es un directorio. Contenidos: ");
+                System.out.println( "Contenidos de la ruta: \""+ruta+"\"");
                 File[] ficheros = fich.listFiles(); // Ojo, ficheros o directorios
                 
-                String tipo = String.format("%-10s", "Tipo");
-                 String nombre = String.format("%-10s", "Nombre");
-                  String tamanio = String.format("%-10s", "Tamaño");
+                String tipo = String.format("%-40s", "Tipo");
+                 String nombre = String.format("%-40s", "Nombre");
+                  String tamanio = String.format("%-40s", "Tamaño");
                 System.out.println("[" + tipo +nombre+tamanio+ "]");
                 for (File f : ficheros) 
                 {
                     
-                    String textoDescr = f.isDirectory() ? "Directorio llamado: "
-                            : f.isFile() ? "Es un fichero: " : "?";
-                    System.out.println("" + textoDescr + "-> " + f.getName()+" Un espacio total de: "+f.getTotalSpace());
+                    String textoDescr = f.isDirectory() ? "Directorio:"
+                            : f.isFile() ? "Fichero:" : "?";
+                    System.out.println("" +  String.format("%-40s", textoDescr)
+                            + String.format("%-40s", f.getName())+" Espacio total:"
+                            +String.format("%-40s", f.getTotalSpace()));
                 }
             }
 
@@ -57,3 +59,13 @@ public class ListadoDirectorio {
 
     }
 }
+/*for (File f : ficheros) 
+                {
+                    
+                    String textoDescr = f.isDirectory() ? "Directorio llamado:"
+                            : f.isFile() ? "Es un fichero:" : "?";
+                    System.out.println("" +  String.format("%-10s", textoDescr)
+                            + String.format("%-40s", f.getName())+" Espacio total de:"
+                            +String.format("%-40s", f.getTotalSpace())
+                            +String.format("%-40s",f.length()));
+                }*/
