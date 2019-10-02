@@ -6,6 +6,9 @@
 package listadodirectorio;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -41,17 +44,24 @@ public class ListadoDirectorio {
                 File[] ficheros = fich.listFiles(); // Ojo, ficheros o directorios
                 
                 String tipo = String.format("%-40s", "Tipo");
-                 String nombre = String.format("%-40s", "Nombre");
-                  String tamanio = String.format("%-40s", "Tamaño");
-                System.out.println("[" + tipo +nombre+tamanio+ "]");
+                String nombre = String.format("%-40s", "Nombre");
+                String tamanio = String.format("%-40s", "Tamaño");
+                String modfificacion = String.format("%-80s", "última modificación");
+                  
+                System.out.println("[" + tipo +nombre+tamanio+modfificacion+ "]");
                 for (File f : ficheros) 
                 {
                     
                     String textoDescr = f.isDirectory() ? "Directorio:"
                             : f.isFile() ? "Fichero:" : "?";
+                  
+                    Date d = new Date(f.lastModified());
+                    
                     System.out.println("" +  String.format("%-40s", textoDescr)
-                            + String.format("%-40s", f.getName())+" Espacio total:"
-                            +String.format("%-40s", f.getTotalSpace()));
+                            + String.format("%-40s", f.getName())
+                            +String.format("%-40s", f.getTotalSpace())
+                            +String.format("%-40s",d.toString()));
+                   
                 }
             }
 
