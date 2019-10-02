@@ -69,13 +69,3 @@ public class ListadoDirectorio {
 
     }
 }
-/*for (File f : ficheros) 
-                {
-                    
-                    String textoDescr = f.isDirectory() ? "Directorio llamado:"
-                            : f.isFile() ? "Es un fichero:" : "?";
-                    System.out.println("" +  String.format("%-10s", textoDescr)
-                            + String.format("%-40s", f.getName())+" Espacio total de:"
-                            +String.format("%-40s", f.getTotalSpace())
-                            +String.format("%-40s",f.length()));
-                }*/
