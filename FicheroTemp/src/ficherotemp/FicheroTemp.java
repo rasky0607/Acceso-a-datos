@@ -24,7 +24,7 @@ public class FicheroTemp {
      */
     public static void main(String[] args) {
         
-        File ft = new File("");       
+        File ft = null;       
         try {
             // TODO code application logic here           
              ft = FicheroTemp.creaFicheroTempConCar("AAAA_", 'A', 20);         
@@ -34,7 +34,9 @@ public class FicheroTemp {
         } catch (IOException ex) {
             Logger.getLogger(FicheroTemp.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
-            ft.delete();
+            if(ft!=null)
+                ft.delete();
+            
             System.out.println("borrado fichero: " + ft.getAbsolutePath());
         }
 
