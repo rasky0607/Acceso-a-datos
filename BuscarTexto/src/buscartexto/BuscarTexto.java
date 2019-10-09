@@ -27,22 +27,27 @@ public class BuscarTexto {
         }
         //Ruta
         String nomFich = args[0];
-        String palabra= args[1];
+        String palabraBuscada= args[1];
         
-        //String nomFich ="/home/alumno1920/prueba.txt";
 
+        //leemos
         try ( BufferedReader fbr = new BufferedReader(new FileReader(nomFich))) {
             int i = 0;
             String linea = fbr.readLine();
             while (linea != null) {
-                //Buscar dentro de la linea si esta la palabra indicada
-               for(i=0;i<linea.length();i++)
+                //Buscar dentro de la linea, si esta la palabra indicada
+                String[] tmp = linea.split(" ");//Guardamos todas las palabras de la frase en el array
+               for(int j=0;j<tmp.length;j++)
                {
+                   String esEstaPalabra=tmp[j];
                    //POR AQUIIII
+                  if(palabraBuscada.equals(esEstaPalabra))//mas 1 para evitar que cuente desde 0
+                       System.out.println("Fila ["+ i+"] Columna ["+(j+1)+"] palabra-> '"+tmp[j]+"'");               
                }
-                
-                System.out.format("[%5d] %s", i++, linea);
-                System.out.println();
+               
+                /*System.out.format("[%5d] %s", i++, linea);
+                System.out.println();*/
+                i++;
                 linea = fbr.readLine();
             }
         } catch (FileNotFoundException e) {
