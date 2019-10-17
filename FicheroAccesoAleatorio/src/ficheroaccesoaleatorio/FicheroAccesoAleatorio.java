@@ -61,6 +61,44 @@ private final File f;
             }
         }
     }
+    
+    //Leer en u na posicion
+    
+     public void Leer(long pos, String nomCampo) throws IOException {
+        try (RandomAccessFile faa = new RandomAccessFile(f, "rws")) {
+            //faa.seek(pos * FicheroAccesoAleatorio.this.longReg);
+            //Ahora LEE
+            for (Pair<String, Integer> campo : this.campos) {
+                if(campo.getKey()== nomCampo)
+                {
+                    RandomAccessFile raf = new RandomAccessFile(f, "rws");
+                    int contador=0;
+                    String prueba="";
+                    while(contador != (pos+FicheroAccesoAleatorio.this.longReg)){
+                    faa.seek(pos);
+                    prueba+=(faa.readChar());
+                     contador++;
+                     
+                    }
+                      System.out.println(contador);
+                    System.out.println(prueba);
+                   
+                    
+                }
+            }
+          /*
+        byte buffer[] = new byte[];
+        RandomAccessFile raf = new RandomAccessFile("/home/alumno1920/prueba2.txt", "rws");
+        raf.seek(TAMANIOREGISTRO * (pos - 1));
+        raf.read(buffer);
+        String s = null;
+        s = new String(buffer, "UTF-8");
+        System.out.print(s);*/
+                //String valorCampoForm = String.format("%1$-" + longCampo + "s", valorCampo);
+                //faa.write(valorCampoForm.getBytes("UTF-8"), 0, longCampo);
+            
+        }
+    }
 
     public static void main(String[] args) {
 
@@ -69,7 +107,6 @@ private final File f;
         campos.add(new Pair("DNI", 9));
         campos.add(new Pair("NOMBRE", 32));
         
-
         try {
             FicheroAccesoAleatorio faa = new FicheroAccesoAleatorio("fic_acceso_aleat.dat", campos);
             Map reg = new HashMap();
@@ -97,6 +134,8 @@ private final File f;
             //faa.insertar(reg, 1);
             faa.insertar(reg);
 //      faa.insertar(reg,25);  // Probarlo, interesante
+
+        faa.Leer(1,"NUMERO");
         } catch (IOException e) {
             System.err.println("Error de E/S: " + e.getMessage());
         } catch (Exception e) {
