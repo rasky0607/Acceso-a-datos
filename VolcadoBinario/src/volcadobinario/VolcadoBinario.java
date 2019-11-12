@@ -10,17 +10,21 @@ import java.io.IOException;
 public class VolcadoBinario {
 
     static int TAM_FILA = 32;
+    //Numero maximo de caracteres en la tabla ASSCII sin pasar alos chinos
     static int MAX_BYTES = 2048;
     InputStream is = null;
 
+    //Constructor
     public VolcadoBinario(InputStream is) {
         this.is = is;
     }
 
+    
     public void volcar() throws IOException {
         byte buffer[] = new byte[TAM_FILA];
         int bytesLeidos;
         int offset = 0;
+        
         do {
             bytesLeidos = is.read(buffer);
             System.out.format("[%5d]", offset);
@@ -30,6 +34,7 @@ public class VolcadoBinario {
             offset += bytesLeidos;
             System.out.println();
         } while (bytesLeidos == TAM_FILA && offset < MAX_BYTES);
+        
         
         //Crear fichero donde volcaremos datos:
         File f = File.createTempFile("tmp.txt", "");
@@ -43,6 +48,7 @@ public class VolcadoBinario {
             System.err.println(e.toString());
         }
     }
+    
 
     public static void main(String[] args) {
         if (args.length < 1) {
@@ -50,10 +56,12 @@ public class VolcadoBinario {
             return;
         }
 
-        String nomFich = args[0];
+        String nomFich = "/home/pablo/ProyectosNetBeans/Acceso-a-datos/Ej1/p.txt";
 
         try ( FileInputStream fis = new FileInputStream(nomFich)) {
             VolcadoBinario vb = new VolcadoBinario(fis);
+          
+            
             System.out.println("Volcado binario de " + nomFich);
             vb.volcar();
         } catch (FileNotFoundException e) {

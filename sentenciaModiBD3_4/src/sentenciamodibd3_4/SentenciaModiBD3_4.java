@@ -3,28 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sentenciamodibd3_2;
+package sentenciamodibd3_4;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.ResultSet;
 
 /**
  *
- * @author Pablo Lopez
+ * @author pablo Lopez Santana
  */
-public class SentenciaModiBD3_2 {
+public class SentenciaModiBD3_4 {
 
-    public static void muestraErrorSQL(SQLException e) {
+      public static void muestraErrorSQL(SQLException e) {
         System.err.println("SQL ERROR mensaje: " + e.getMessage());
         System.err.println("SQL Estado: " + e.getSQLState());
         System.err.println("SQL código específico: " + e.getErrorCode());
     }
-
+    
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
-
+        // TODO code application logic here
+        
+        
         String basedatos = "libro_ad";
         String host = "localhost";
         String port = "3306";
@@ -40,16 +45,11 @@ public class SentenciaModiBD3_2 {
            //Ejecutamos la consulta
       ResultSet rs = s.executeQuery("SELECT DNI,APELLIDOS,CP FROM CLIENTES");
       
-           int i=1;
-            while (rs.next()) {
-                 System.out.println("["+i++ +"]");
-                 System.out.println("DNI "+rs.getString("DNI"));
-                 System.out.println("APELLIDOS "+rs.getString("APELLIDOS"));
-                 System.out.println("CP "+rs.getInt("CP"));
-                 /*Se puede utilizar getInt en lugar de getString ya que internamente hace una
-                 conversion implicita a la hora  de recoger los datos*/
-                
-            }
+           //Colocamos el puntero en la ultima posicion es decir en el ultimo registro y de este modo indicara el numero de filas que a tenido que recorrer hasta el ultimo.
+           rs.last();
+           int i=rs.getRow();
+            System.out.println("Numero de registros: "+i);
+          
       
             
         } catch (SQLException e) {
@@ -59,6 +59,7 @@ public class SentenciaModiBD3_2 {
         } catch (Exception e) {
             e.printStackTrace(System.err);
         }
+        
     }
     
 }
