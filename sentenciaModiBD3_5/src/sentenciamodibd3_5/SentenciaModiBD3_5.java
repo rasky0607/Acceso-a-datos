@@ -41,8 +41,10 @@ public class SentenciaModiBD3_5 {
         System.out.println("Dime el DNI de algun cliente:");
         Scanner teclado = new Scanner(System.in);
         dni = teclado.nextLine();
+        
         try ( Connection c = DriverManager.getConnection(urlConnection, user, pwd); //Creamos la consulta en base ala conexion que tenemos creada
                   Statement s = c.createStatement()) {
+            
             System.out.println("Conexión realizada.");
             String query = "SELECT DNI,APELLIDOS,CP FROM CLIENTES WHERE DNI='" + dni + "'";
             //Ejecutamos la consulta
@@ -53,6 +55,9 @@ public class SentenciaModiBD3_5 {
             System.out.println("Resultado de busqueda de dni \'" + dni + "\'");
             System.out.println("----------------------------------------");
            
+            /*
+            Importante hacer el next()
+            ya que independientemente de que sea un solo registro el recuperado, necesita recorrer la colecion aun que su cantidad de registros sea 1*/
                 if (rs.next()) {
                     System.out.println("DNI " + rs.getString("DNI"));
                     System.out.println("APELLIDOS " + rs.getString("APELLIDOS"));
