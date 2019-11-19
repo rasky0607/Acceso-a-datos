@@ -28,15 +28,32 @@ public class Facturacion {
      */
     public static void main(String[] args) throws SQLException {
         // TODO code application logic here    
-        Facturacion f = new Facturacion();      
+        Facturacion f = new Facturacion(); 
+        //f.conectar();
+        
+        //Insercion de un cliente
         Cliente cl = new Cliente();
+        cl.setId(4);
         cl.setDni("9498923L");
-        cl.setId(1);
-        cl.save(f.conectar());
+        cl.setNombre("Paco");
+        cl.insertCliente(f.conectar());
+        
+        //Busqueda de un cliente
+        Cliente cl1 = new Cliente();
+        cl1.setId(1);      
+        cl1.selectClienteForId(f.conectar());
         
     }
 
     public  Connection conectar() {
+        String basedatos = "facturacion";
+        String host = "localhost";
+        String port = "3306";
+        String parAdic = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false";
+        String urlConnection = "jdbc:mysql://" + host + ":" + port + "/" + basedatos + parAdic;
+        String user = "root";
+        String pwd = "123";
+
         Connection c=null;
         try{
             c = DriverManager.getConnection(urlConnection, user, pwd);

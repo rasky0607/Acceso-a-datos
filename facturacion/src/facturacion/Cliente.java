@@ -9,14 +9,16 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 /**
  *
  * @author Pablo Lopez
  */
 public class Cliente {
+
     int id;
     String dni;
-    String nombre; 
+    String nombre;
 
     public int getId() {
         return id;
@@ -33,7 +35,7 @@ public class Cliente {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-      
+
     public String getDni() {
         return dni;
     }
@@ -41,27 +43,30 @@ public class Cliente {
     public void setDni(String dni) {
         this.dni = dni;
     }
-    
-  public boolean save(Connection c) throws SQLException {
-      String Query="INSERT INTO cliente(id_cliente,dni,nom_cliente) VALUES (?,?);";
-      PreparedStatement sInsert = c.prepareStatement(Query,PreparedStatement.RETURN_GENERATED_KEYS);
-      sInsert.setInt(1, 1);
-      sInsert.setString(2, "44126");
-      sInsert.executeUpdate();
-      return  true;
-   }
-  
-  public void GetCliente(Connection c,Cliente cl) throws SQLException{
-      String Query ="SELECT id_cliente,dni,nom_cliente from cliente";
-      PreparedStatement sInsert = c.prepareStatement(Query);
-      sInsert.setString(1, "2");
-      sInsert.setInt(3, 44126);
-      sInsert.executeQuery();
-  }
-      
-      
-       
-        
-    
-    
+
+    public boolean insertCliente(Connection c) throws SQLException {
+        String Query = "INSERT INTO cliente(id_cliente,dni,nom_cliente) VALUES (?,?,?);";
+        PreparedStatement psInsert = c.prepareStatement(Query, PreparedStatement.RETURN_GENERATED_KEYS);
+        psInsert.setInt(1, getId());
+        psInsert.setString(2, getDni());
+        psInsert.setString(3, getNombre());
+        psInsert.executeUpdate();
+        return true;
+    }
+
+    //Busuqeda de cliente por el id
+    public void selectClienteForId(Connection c) throws SQLException {
+        String Query = "SELECT id_cliente,dni,nom_cliente from cliente where id_cliente='" + getId() + "'";
+        PreparedStatement psSelect = c.prepareStatement(Query);
+        ResultSet rs = psSelect.executeQuery();
+
+        int i = 1;
+        while (rs.next()) {
+            System.out.println("ID: " + rs.getInt("id_cliente"));
+            System.out.println("DNI: " + rs.getString("dni"));
+            System.out.println("Nombre: " + rs.getString("nom_cliente"));
+            System.out.println("--------------------------------------");
+        }
+    }
+
 }
