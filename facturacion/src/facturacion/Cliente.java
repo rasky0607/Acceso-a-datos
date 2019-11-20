@@ -59,7 +59,7 @@ public class Cliente {
         String Query = "SELECT id_cliente,dni,nom_cliente from cliente where id_cliente='" + getId() + "'";
         PreparedStatement psSelect = c.prepareStatement(Query);
         ResultSet rs = psSelect.executeQuery();
-
+        //rs.getRow() --> indica la fila actual en la que me encuentro
         int i = 1;
         while (rs.next()) {
             System.out.println("ID: " + rs.getInt("id_cliente"));
