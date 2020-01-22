@@ -30,11 +30,6 @@ public class Facturacion {
      */
     public static void main(String[] args) throws SQLException {
         // TODO code application logic here 
-        int eleccion = menu();
-        do {
-            System.out.println("facturacion.Facturacion.main()");
-
-        } while (eleccion != 0);
 
         Facturacion dao = new Facturacion();
         //f.conectar();
@@ -47,8 +42,42 @@ public class Facturacion {
         cl.insertCliente(f.conectar());*/
         //Busqueda de un cliente
         Cliente cl1 = new Cliente();
-        cl1.setId(4);
-        cl1.selectClienteForId(dao.conectar());
+        Cliente cl2 = new Cliente();
+        /*cl1.setId(4);
+        cl1.selectClienteForId(dao.conectar());*/
+
+        //Menu
+        int eleccion=-1;
+        do {          
+            switch (eleccion) {
+                case 1:
+                    cl1.selectAllCliente(dao.conectar());
+                    dao.desconectar();
+                    eleccion=-1;
+                    break;
+                case 2:
+                    cl2.setId(25);
+                    cl2.setDni("77d3R");
+                    cl2.setNombre("pola");
+                    cl2.insertCliente(dao.conectar());
+                     eleccion=-1;
+                    break;
+                case 3:
+                     eleccion=-1;
+                    break;
+
+                case 4:
+                     eleccion=-1;
+                    break;
+
+                default:
+                    //System.out.print("\tERROR: Esa opcion no esta contemplada.. ");
+                    eleccion = menu();
+                    break;
+
+            }
+            
+        } while (eleccion != 0);
 
     }
 
@@ -82,18 +111,19 @@ public class Facturacion {
 
     public static int menu() {
         int opcion = -1;
-       
-            System.out.println("--Opciones:--\t\t");
-            System.out.println("\t---------------");
-            System.out.println("\t1-Lista Clientes.");
-            System.out.println("\t2-Lista Productos.");
-            System.out.println("\t3-Lista Facturas.");
-            System.out.println("\t4-Listar contenido de una factura.");
-            System.out.println("\t0-Salir.");
-            System.out.print("\tOpción escogida: ");
-            Scanner lector = new Scanner(System.in);
-            opcion = Integer.parseInt(lector.nextLine());
+
+        System.out.println("--Opciones:--\t\t");
+        System.out.println("\t---------------");
+        System.out.println("\t1-Lista Clientes.");
+        System.out.println("\t2-Insertar Clientes.");
+        System.out.println("\t3-Lista Facturas.");
+        System.out.println("\t4-Listar contenido de una factura.");
+        System.out.println("\t0-Salir.");
+        System.out.print("\tOpción escogida: ");
+        Scanner lector = new Scanner(System.in);
+        opcion = Integer.parseInt(lector.nextLine());
         
+
         return opcion;
 
     }
