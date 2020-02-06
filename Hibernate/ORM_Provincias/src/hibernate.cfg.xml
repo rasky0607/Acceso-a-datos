@@ -43,14 +43,11 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/proyecto_orm?zeroDateTimeBehavior=convertToNull</property>
-    <property name="hibernate.connection.username">libro_ad</property>
-    <property name="hibernate.connection.password">libro_ad</property>
-    <mapping resource="ORM/EmpleadoDatosProf.hbm.xml"/>
-    <mapping resource="ORM/ProyectoSede.hbm.xml"/>
-    <mapping resource="ORM/Proyecto.hbm.xml"/>
-    <mapping resource="ORM/Sede.hbm.xml"/>
-    <mapping resource="ORM/Departamento.hbm.xml"/>
-    <mapping resource="ORM/Empleado.hbm.xml"/>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/provincias?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">123</property>
+    <mapping resource="ORM/Provincia.hbm.xml"/>
+    <mapping resource="ORM/Localidad.hbm.xml"/>
+    <mapping resource="ORM/Comunidad.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

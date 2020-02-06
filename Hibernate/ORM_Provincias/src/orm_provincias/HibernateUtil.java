@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pruebaorm;
+package orm_provincias;
 
-import org.hibernate.cfg.Configuration;//Cambiado Pagina libro 110-117
+import org.hibernate.cfg.Configuration;
 import org.hibernate.SessionFactory;
 
 /**

@@ -40,11 +40,8 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-reverse-engineering>
-  <schema-selection match-catalog="proyecto_orm"/>
-  <table-filter match-name="departamento"/>
-  <table-filter match-name="proyecto_sede"/>
-  <table-filter match-name="empleado"/>
-  <table-filter match-name="empleado_datos_prof"/>
-  <table-filter match-name="sede"/>
-  <table-filter match-name="proyecto"/>
+  <schema-selection match-catalog="provincias"/>
+  <table-filter match-name="localidad"/>
+  <table-filter match-name="provincia"/>
+  <table-filter match-name="comunidad"/>
 </hibernate-reverse-engineering>

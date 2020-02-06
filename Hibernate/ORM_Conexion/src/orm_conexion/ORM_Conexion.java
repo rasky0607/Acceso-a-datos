@@ -83,18 +83,18 @@ public class ORM_Conexion {
            
              for(Sede item :lSede)
              {
-                 System.out.println("Sede"+item.getNomSede());
+                 System.out.println("Sede "+item.getNomSede());
              }
              
              for(Departamento item :lDepartamentos)
              {
-                 System.out.println("Departamento"+item.getNomDepto());
+                 System.out.println("Departamento "+item.getNomDepto());
              }
              
              for(Empleado item :lEmpleado)
              {
-                  System.out.println("Empleado"+item.getDni());
-                 System.out.println("Empleado"+item.getNomEmp());
+                  System.out.println("Empleado "+item.getDni());
+                 System.out.println("Empleado "+item.getNomEmp());
              }
 
             } catch (Exception e) {

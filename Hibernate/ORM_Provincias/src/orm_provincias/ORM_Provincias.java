@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pruebaorm;
+package orm_provincias;
 
 /**
  *
  * @author alumno1920
  */
-public class PruebaORM {
+public class ORM_Provincias {
 
     /**
      * @param args the command line arguments
