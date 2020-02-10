@@ -32,28 +32,24 @@ public class ORM_Provincias {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        /*String rutaComunidades = "/Users/pablolopez/Desktop/comunidades.csv";
-        String rutaProvincias = "/Users/pablolopez/Desktop/provincias.csv";
-        String rutaLocalidades = "/Users/pablolopez/Desktop/localidades.csv";*/
-        String rutaFichero = "./localidades.csv";
-        File f = new File("localidades.csv"); // Creamos un objeto file
-        System.out.println(f.getAbsolutePath()); // Llamamos al método que                        
-         rutaFichero=f.getAbsolutePath();                                   //devuelve la ruta absoluta
-        
+        String rutaComunidades = "./comunidades.csv";
+        String rutaProvincias = "./provincias.csv";
+        String rutaLocalidades = "./localidades.csv";
+      
         Comunidad c = new Comunidad();
         Provincia p = new Provincia();
         Localidad l = new Localidad();
         try (Session s = HibernateUtil.getSessionFactory().openSession()) {
             //Comunidaddes
-            //LecturaFichero(rutaComunidades);
-            /*leerFicheroComunidades(s, rutaComunidades, c);
+            leerFicheroComunidades(s, rutaComunidades, c);
             selectTabla(s, c);
-            
+            //Provincias
             leerFicheroProvincias(s, rutaProvincias, p);
             selectTabla(s, p);
+            //Localidades
             leerFicheroLocalidades(s, rutaLocalidades, l);
-            selectTabla(s, l);*/
-            LecturaFichero(rutaFichero);
+            selectTabla(s, l);
+            
         }
 
     }
