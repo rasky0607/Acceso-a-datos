@@ -17,6 +17,7 @@ import ORM.ProyectoSedeId;
 import ORM.Sede;
 import java.util.List;
 import javax.persistence.Query;
+
 /**
  *
  * @author Pablo Lopez
@@ -28,11 +29,11 @@ public class ORM_Conexion {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-            try ( Session s = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session s = HibernateUtil.getSessionFactory().openSession()) {
             Transaction t = null;
 
             try {
-                t = s.beginTransaction();
+                //t = s.beginTransaction();
 
                 /*ORM.Sede sede = new ORM.Sede();
                 sede.setNomSede("MÁLAGA");
@@ -48,54 +49,65 @@ public class ORM_Conexion {
                 emp.setNomEmp("SAMPER");
                 emp.setDepartamento(depto);
                 s.save(emp);*/
-                
-                 //Nuevas Sede
-                Sede nuevaSede =new ORM.Sede();
+                //Nuevas Sede
+                t = s.beginTransaction();
+                Sede nuevaSede = new ORM.Sede();
                 nuevaSede.setNomSede("GRANADA2");
-                s.save(nuevaSede);
+                nuevaSede.setIdSede(1);
+                InsertarSede(s, nuevaSede);
+                t.commit();
+
                 //Nuevos departamentos
+                t = s.beginTransaction();
                 Departamento nuevoDepartamento = new Departamento();
                 nuevoDepartamento.setNomDepto("RECURSOS HUMANOS");
                 nuevoDepartamento.setSede(nuevaSede);
-                s.save(nuevoDepartamento);
+                nuevoDepartamento.setIdDepto(1);
+                InsertarDepartamento(s, nuevoDepartamento);
+
+                t.commit();
+
                 //Nuevos empleados
+                t = s.beginTransaction();
                 Empleado nuevoEmpleado = new Empleado();
                 nuevoEmpleado.setDni("12890152P");
-                nuevoEmpleado.setNomEmp("SOLOMILLO2");
+                nuevoEmpleado.setNomEmp("MARCOLINO");
                 nuevoEmpleado.setDepartamento(nuevoDepartamento);
-                s.save(nuevoEmpleado);  
-                 Empleado nuevoEmpleado2 = new Empleado();
-                nuevoEmpleado2.setDni("12890127L");
-                nuevoEmpleado2.setNomEmp("ENTRCOD");
-                nuevoEmpleado2.setDepartamento(nuevoDepartamento);
-                s.save(nuevoEmpleado2);    
-               
+                s.saveOrUpdate(nuevoEmpleado);
+                InsertarEmpleado(s, nuevoEmpleado);
                 t.commit();
-                
-                //Consultas de HQL
-                Query query=s.createQuery("FROM Sede").setReadOnly(true);
-                Query query2=s.createQuery("FROM Departamento").setReadOnly(true);
-                Query query3=s.createQuery("FROM Empleado").setReadOnly(true);
-                
-               List<Sede> lSede= query.getResultList();
-               List<Departamento> lDepartamentos= query2.getResultList();
-               List<Empleado> lEmpleado= query3.getResultList();
-           
-             for(Sede item :lSede)
-             {
-                 System.out.println("Sede "+item.getNomSede());
-             }
-             
-             for(Departamento item :lDepartamentos)
-             {
-                 System.out.println("Departamento "+item.getNomDepto());
-             }
-             
-             for(Empleado item :lEmpleado)
-             {
-                  System.out.println("Empleado "+item.getDni());
-                 System.out.println("Empleado "+item.getNomEmp());
-             }
+
+                t = s.beginTransaction();
+
+                Empleado nuevoEmpleado2 = new Empleado();
+                nuevoEmpleado2.setDni("12890127L");
+                nuevoEmpleado2.setNomEmp("JUAN");
+                nuevoEmpleado2.setDepartamento(nuevoDepartamento);
+                s.saveOrUpdate(nuevoEmpleado2);
+                InsertarEmpleado(s, nuevoEmpleado2);
+                t.commit();
+
+                t = s.beginTransaction();
+
+                Empleado nuevoEmpleado3 = new Empleado();
+                nuevoEmpleado3.setDni("32490152W");
+                nuevoEmpleado3.setNomEmp("TONY");
+                nuevoEmpleado3.setDepartamento(nuevoDepartamento);
+                s.saveOrUpdate(nuevoEmpleado3);
+                InsertarEmpleado(s, nuevoEmpleado3);
+                t.commit();
+
+                t = s.beginTransaction();
+
+                Empleado nuevoEmpleado4 = new Empleado();
+                nuevoEmpleado4.setDni("52460148O");
+                nuevoEmpleado4.setNomEmp("PEPE");
+                nuevoEmpleado4.setDepartamento(nuevoDepartamento);
+                s.saveOrUpdate(nuevoEmpleado4);
+                InsertarEmpleado(s, nuevoEmpleado4);
+                t.commit();
+
+                SelectsHQL(s);
 
             } catch (Exception e) {
                 e.printStackTrace(System.err);
@@ -106,5 +118,67 @@ public class ORM_Conexion {
 
         }
     }
-    
+
+    public static void SelectsHQL(Session s) {
+        //Consultas Select de HQL
+        Query query = s.createQuery("FROM Sede").setReadOnly(true);
+        Query query2 = s.createQuery("FROM Departamento").setReadOnly(true);
+        Query query3 = s.createQuery("FROM Empleado").setReadOnly(true);
+
+        List<Sede> lSede = query.getResultList();
+        List<Departamento> lDepartamentos = query2.getResultList();
+        List<Empleado> lEmpleado = query3.getResultList();
+        System.out.println("--TABLA SEDE--");
+        for (Sede item : lSede) {
+            System.out.println("Sede " + item.getNomSede());
+        }
+        System.out.println("--TABLA DEPARTAMENTO--");
+        for (Departamento item : lDepartamentos) {
+            System.out.println("Departamento " + item.getNomDepto());
+        }
+        System.out.println("--TABLA EMPLEADO--");
+        for (Empleado item : lEmpleado) {
+            System.out.println("DNI empleado " + item.getDni());
+            System.out.println("Nombre empleado " + item.getNomEmp());
+        }
+
+    }
+
+    public static void InsertarSede(Session s, Sede nuevaSede) {
+        //Comprobamos si ya existe una sede con ese nombre
+        Query queryComprobacion1 = s.createQuery("FROM Sede WHERE idSede='" + nuevaSede.getIdSede() + "'").setReadOnly(true);
+        List<Sede> listComprobSede = queryComprobacion1.getResultList();
+        if (listComprobSede.isEmpty()) {
+            System.out.println("No existe una Sede con el id " + nuevaSede.getIdSede() + " y nombre " + nuevaSede.getNomSede());
+            s.save(nuevaSede);
+        } else {
+            System.out.println("Ya existe una Sede con el nombre " + nuevaSede.getNomSede());
+        }
+    }
+
+    public static void InsertarDepartamento(Session s, Departamento nuevoDepartamento) {
+        //Comprobamos si existe un departamento con el mismo nombre que el que pretendemos isertar
+        Query queryComprobacion = s.createQuery("FROM Departamento WHERE idDepto='" + nuevoDepartamento.getIdDepto() + "'").setReadOnly(true);
+        List<Departamento> listComprobDepartamento = queryComprobacion.getResultList();
+        if (listComprobDepartamento.isEmpty()) {
+            s.save(nuevoDepartamento);
+            System.out.println("NO existe un Departamento con id de " + nuevoDepartamento.getIdDepto() + " y nombre " + nuevoDepartamento.getNomDepto());
+        } else {
+            System.out.println("Ya existe un Departamento con ID  " + nuevoDepartamento.getIdDepto() + " y con nombre " + nuevoDepartamento.getNomDepto());
+        }
+    }
+
+    public static void InsertarEmpleado(Session s, Empleado nuevoEmpleado) {
+        //Comprobamos si existe un Empleado con el mismo DNI que el que pretendemos isertar
+        Query queryComprobacion = s.createQuery("FROM Empleado WHERE dni='" + nuevoEmpleado.getDni() + "'").setReadOnly(true);
+        List<Empleado> listComprobEmple = queryComprobacion.getResultList();
+        System.out.println("lista " +listComprobEmple.size());
+        if (listComprobEmple.size() < 1) {
+            System.out.println("NO existe empleado con DNI " + nuevoEmpleado.getDni()+", insertando ...");
+        } else {
+            System.out.println("Actualizando empleado con DNI " + nuevoEmpleado.getDni());
+        }
+
+    }
+
 }

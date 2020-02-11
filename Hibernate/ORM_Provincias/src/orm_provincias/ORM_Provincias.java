@@ -14,11 +14,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
+import org.hibernate.exception.ConstraintViolationException;
 
 
 /**
@@ -105,6 +108,7 @@ public class ORM_Provincias {
 
     }
 
+    //org.hibernate.exception.ConstraintViolationException
     //Comunidades
     public static void leerFicheroComunidades(Session s, String ruta, Comunidad c) {
         Transaction t = null;
@@ -116,6 +120,13 @@ public class ORM_Provincias {
                 String[] tmp = linea.split(",");//Guardamos todas las palabras de la linea del fichero en el array         
                 i++;
                 linea = fbr.readLine();
+                //Comprobamos que no encontramos un registro en la BD con el id que hemos leido
+                Query query = s.createQuery("FROM Comunidad WHERE idCom='"+tmp[0]+"'").setReadOnly(true);
+                List<Comunidad> list = query.getResultList();//Si esta lista  esta vacia, quiere decir que no hay ningun registro en la BD con ese ID y puede ser insertado
+                if(list.isEmpty()){
+                   System.out.println("Insertando comunidad con id "+tmp[0]);
+               
+                
                 //Iniciamos transaccion              
                 t = s.beginTransaction();
                 c= new Comunidad();
@@ -124,14 +135,21 @@ public class ORM_Provincias {
                 s.save(c);
                 t.commit();
                 System.out.println(i + "º Insercion en Comunidad exitosa.!");
+                } else
+                    System.out.println("ERROR en la "+i+"º insercion Ya hay una comunidad registrada con el id "+tmp[0]);
             }
         } catch (FileNotFoundException e) {
             System.out.println("No existe fichero " + ruta);
         } catch (IOException e) {
             System.out.println("Error de E/S: " + e.getMessage());
-        } catch (Exception e) {
+        }catch(ConstraintViolationException e){
+            System.out.println("Error en " + i + "º insercion en Comunidad Violacion de clave");
+            if (t != null) {
+                t.rollback();
+            }
+        }catch (Exception e) {
             e.getMessage();
-            System.out.println("Error en " + i + "º insercion en Comunidad por clave primaria");
+            System.out.println("Error en " + i + "º insercion por algun otro error");
             if (t != null) {
                 t.rollback();
             }
@@ -148,6 +166,12 @@ public class ORM_Provincias {
                 String[] tmp = linea.split(",");//Guardamos todas las palabras de la linea del fichero en el array         
                 i++;
                 linea = fbr.readLine();
+                 //Comprobamos que no encontramos un registro en la BD con el id que hemos leido
+                Query query = s.createQuery("FROM Provincia WHERE idProv='"+tmp[1]+"'").setReadOnly(true);
+                List<Comunidad> list = query.getResultList();//Si esta lista  esta vacia, quiere decir que no hay ningun registro en la BD con ese ID y puede ser insertado
+                if(list.isEmpty()){
+                   System.out.println("Insertando Provincia con id "+tmp[1]);
+                   
                 //Iniciamos transaccion              
                 t = s.beginTransaction();
                 p= new Provincia();
@@ -159,6 +183,8 @@ public class ORM_Provincias {
                 s.save(p);
                 t.commit();
                 System.out.println(i + "º Insercion en Provincia exitosa.!");
+                }else
+                    System.out.println("ERROR en la "+i+"º insercion Ya hay una Provincia registrada con el id "+tmp[1]);
             }
         } catch (FileNotFoundException e) {
             System.out.println("No existe fichero " + ruta);
@@ -183,6 +209,13 @@ public class ORM_Provincias {
                 String[] tmp = linea.split(",");//Guardamos todas las palabras de la linea del fichero en el array         
                 i++;
                 linea = fbr.readLine();
+                
+                 //Comprobamos que no encontramos un registro en la BD con el id que hemos leido
+                Query query = s.createQuery("FROM Localidad WHERE idLoc='"+i+"'").setReadOnly(true);
+                List<Comunidad> list = query.getResultList();//Si esta lista  esta vacia, quiere decir que no hay ningun registro en la BD con ese ID y puede ser insertado
+                if(list.isEmpty()){
+                   System.out.println("Insertando Localidad con id "+i);
+                   
                 //Iniciamos transaccion              
                 t = s.beginTransaction();
                 l= new Localidad();
@@ -192,8 +225,11 @@ public class ORM_Provincias {
                 p.setIdProv(Integer.parseInt(tmp[0]));//Ya que en el fichero de "Localidades" primero se lee el codigo de la Provincia y a continuacion el nombre de la localidad
                 l.setProvincia(p);            
                 s.save(l);
+                
                 t.commit();
                 System.out.println(i + "º Insercion en Localidad exitosa.!");
+                }else
+                    System.out.println("ERROR en la "+i+"º insercion Ya hay una Localidad registrada con el id "+i);
             }
         } catch (FileNotFoundException e) {
             System.out.println("No existe fichero " + ruta);
