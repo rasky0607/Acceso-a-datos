@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12-feb-2020 19:36:11 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="ORM.Empleado" table="empleado" catalog="jerarquia2" optimistic-lock="version">
+        <id name="dni" type="string">
+            <column name="dni" length="9" />
+            <generator class="assigned" />
+        </id>
+        <property name="nomEmp" type="string">
+            <column name="nomEmp" length="250" />
+        </property>
+        <set name="pantillas" table="pantilla" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="dniEmpleado" length="9" />
+            </key>
+            <one-to-many class="ORM.Pantilla" />
+        </set>
+    </class>
+</hibernate-mapping>

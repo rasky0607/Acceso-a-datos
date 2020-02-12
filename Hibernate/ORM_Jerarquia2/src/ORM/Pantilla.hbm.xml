@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12-feb-2020 19:36:11 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="ORM.Pantilla" table="pantilla" catalog="jerarquia2" optimistic-lock="version">
+        <id name="numEmpleado" type="int">
+            <column name="numEmpleado" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="empleado" class="ORM.Empleado" fetch="select">
+            <column name="dniEmpleado" length="9" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>
