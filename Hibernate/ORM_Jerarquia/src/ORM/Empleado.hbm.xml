@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 12 feb. 2020 11:37:01 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="ORM.Empleado" table="empleado" catalog="jerarquia" optimistic-lock="version">
+        <id name="dni" type="string">
+            <column name="dni" length="9" />
+            <generator class="assigned" />
+        </id>
+    
+        <property name="nomEmp" type="string">
+            <column name="nom_emp" length="60" not-null="true" />
+        </property>
+       
+       <discriminator column="tipo" type="string"/>
+       <subclass name="OMR.Emplantilla" discriminator-value="plantilla">
+        <property name="numEmp" type="java.lang.Integer">
+            <column name="num_emp" unique="true" />
+        </property>
+        <subclass>
+            
+        <property name="tipo" type="string">
+            <column name="tipo" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -121,7 +121,7 @@ public class ORM_Provincias {
                 i++;
                 linea = fbr.readLine();
                 //Comprobamos que no encontramos un registro en la BD con el id que hemos leido
-                Query query = s.createQuery("FROM Comunidad WHERE idCom='"+tmp[0]+"'").setReadOnly(true);
+                Query query = s.createQuery("FROM Comunidad WHERE idCom='"+tmp[0]+"'").setReadOnly(true);              
                 List<Comunidad> list = query.getResultList();//Si esta lista  esta vacia, quiere decir que no hay ningun registro en la BD con ese ID y puede ser insertado
                 if(list.isEmpty()){
                    System.out.println("Insertando comunidad con id "+tmp[0]);
