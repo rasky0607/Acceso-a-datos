@@ -29,8 +29,9 @@ public class ORM_Conexion {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        try (Session s = HibernateUtil.getSessionFactory().openSession()) {
+        try ( Session s = HibernateUtil.getSessionFactory().openSession()) {
             Transaction t = null;
+            Transaction t2 = null;
 
             try {
                 //t = s.beginTransaction();
@@ -64,7 +65,6 @@ public class ORM_Conexion {
                 nuevoDepartamento.setSede(nuevaSede);
                 nuevoDepartamento.setIdDepto(1);
                 InsertarDepartamento(s, nuevoDepartamento);
-
                 t.commit();
 
                 //Nuevos empleados
@@ -73,8 +73,8 @@ public class ORM_Conexion {
                 nuevoEmpleado.setDni("12890152P");
                 nuevoEmpleado.setNomEmp("MARCOLINO");
                 nuevoEmpleado.setDepartamento(nuevoDepartamento);
+                InsertarEmpleado(nuevoEmpleado.getDni());
                 s.saveOrUpdate(nuevoEmpleado);
-                InsertarEmpleado(s, nuevoEmpleado);
                 t.commit();
 
                 t = s.beginTransaction();
@@ -83,28 +83,37 @@ public class ORM_Conexion {
                 nuevoEmpleado2.setDni("12890127L");
                 nuevoEmpleado2.setNomEmp("JUAN");
                 nuevoEmpleado2.setDepartamento(nuevoDepartamento);
-                s.saveOrUpdate(nuevoEmpleado2);
-                InsertarEmpleado(s, nuevoEmpleado2);
+                InsertarEmpleado(nuevoEmpleado2.getDni());
+                s.saveOrUpdate(nuevoEmpleado2);               
                 t.commit();
 
                 t = s.beginTransaction();
 
                 Empleado nuevoEmpleado3 = new Empleado();
                 nuevoEmpleado3.setDni("32490152W");
-                nuevoEmpleado3.setNomEmp("TONY");
+                nuevoEmpleado3.setNomEmp("KIKE");
                 nuevoEmpleado3.setDepartamento(nuevoDepartamento);
-                s.saveOrUpdate(nuevoEmpleado3);
-                InsertarEmpleado(s, nuevoEmpleado3);
+                InsertarEmpleado(nuevoEmpleado3.getDni());
+                s.saveOrUpdate(nuevoEmpleado3);              
                 t.commit();
 
                 t = s.beginTransaction();
-
                 Empleado nuevoEmpleado4 = new Empleado();
                 nuevoEmpleado4.setDni("52460148O");
-                nuevoEmpleado4.setNomEmp("PEPE");
+                nuevoEmpleado4.setNomEmp("LOLO");
                 nuevoEmpleado4.setDepartamento(nuevoDepartamento);
+                InsertarEmpleado(nuevoEmpleado4.getDni());
                 s.saveOrUpdate(nuevoEmpleado4);
-                InsertarEmpleado(s, nuevoEmpleado4);
+                t.commit();
+                
+                t= s.beginTransaction();
+                Empleado nuevoEmpleado5 = new Empleado();
+                nuevoEmpleado5.setDni("12030143Z");
+                nuevoEmpleado5.setNomEmp("NOMBRE");
+                nuevoEmpleado5.setDepartamento(nuevoDepartamento);
+                InsertarEmpleado(nuevoEmpleado5.getDni());
+                s.saveOrUpdate(nuevoEmpleado5);
+
                 t.commit();
 
                 SelectsHQL(s);
@@ -168,15 +177,17 @@ public class ORM_Conexion {
         }
     }
 
-    public static void InsertarEmpleado(Session s, Empleado nuevoEmpleado) {
-        //Comprobamos si existe un Empleado con el mismo DNI que el que pretendemos isertar
-        Query queryComprobacion = s.createQuery("FROM Empleado WHERE dni='" + nuevoEmpleado.getDni() + "'").setReadOnly(true);
-        List<Empleado> listComprobEmple = queryComprobacion.getResultList();
-        System.out.println("lista " +listComprobEmple.size());
-        if (listComprobEmple.size() < 1) {
-            System.out.println("NO existe empleado con DNI " + nuevoEmpleado.getDni()+", insertando ...");
-        } else {
-            System.out.println("Actualizando empleado con DNI " + nuevoEmpleado.getDni());
+    public static void InsertarEmpleado(String dni) {
+        try ( Session s = HibernateUtil.getSessionFactory().openSession()) {
+            //Comprobamos si existe un Empleado con el mismo DNI que el que pretendemos isertar
+            Query queryComprobacion = s.createQuery("FROM Empleado WHERE dni='" + dni + "'").setReadOnly(true);
+            List<Empleado> listComprobEmple = queryComprobacion.getResultList();
+            System.out.println("lista " + listComprobEmple.size());
+            if (listComprobEmple.size() < 1) {
+                System.out.println("NO existe empleado con DNI " + dni + ", insertando ...");
+            } else {
+                System.out.println("Actualizando empleado con DNI " + dni);
+            }
         }
 
     }
