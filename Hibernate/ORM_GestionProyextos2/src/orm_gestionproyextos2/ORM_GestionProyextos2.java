@@ -31,6 +31,7 @@ public class ORM_GestionProyextos2 {
            insertarProyecto(insertarEmpleado("42372631E","ALEJANDRO"),"DANTE", new Date());
            
            //Date.valueOf("2011-10-01")
+             //  s.setDate(++i, this.fInicio, Calendar.getInstance());
     }
 
     public static Empleado insertarEmpleado(String dni,String nombre) {
