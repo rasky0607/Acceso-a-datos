@@ -49,7 +49,7 @@ Contributor(s):
     <mapping resource="ORM/Empleado.hbm.xml"/>
     <mapping resource="ORM/Proyecto.hbm.xml"/>
     <mapping resource="ORM/ProyectoSede.hbm.xml"/>
-    <mapping resource="ORM/EmpleadoDatosProf.hbm.xml"/>
+    <mapping resource="ORM/JefeProyecto.hbm.xml"/>
     <mapping resource="ORM/Sede.hbm.xml"/>
     <mapping resource="ORM/Departamento.hbm.xml"/>
   </session-factory>

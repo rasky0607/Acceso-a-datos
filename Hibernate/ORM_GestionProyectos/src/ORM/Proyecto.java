@@ -1,5 +1,5 @@
 package ORM;
-// Generated 12-feb-2020 22:23:19 by Hibernate Tools 4.3.1
+// Generated 13-feb-2020 0:49:55 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -16,6 +16,7 @@ public class Proyecto  implements java.io.Serializable {
      private Date FInicio;
      private Date FFin;
      private String nomProy;
+     private Set jefeProyectos = new HashSet(0);
      private Set proyectoSedes = new HashSet(0);
 
     public Proyecto() {
@@ -26,10 +27,11 @@ public class Proyecto  implements java.io.Serializable {
         this.FInicio = FInicio;
         this.nomProy = nomProy;
     }
-    public Proyecto(Date FInicio, Date FFin, String nomProy, Set proyectoSedes) {
+    public Proyecto(Date FInicio, Date FFin, String nomProy, Set jefeProyectos, Set proyectoSedes) {
        this.FInicio = FInicio;
        this.FFin = FFin;
        this.nomProy = nomProy;
+       this.jefeProyectos = jefeProyectos;
        this.proyectoSedes = proyectoSedes;
     }
    
@@ -60,6 +62,13 @@ public class Proyecto  implements java.io.Serializable {
     
     public void setNomProy(String nomProy) {
         this.nomProy = nomProy;
+    }
+    public Set getJefeProyectos() {
+        return this.jefeProyectos;
+    }
+    
+    public void setJefeProyectos(Set jefeProyectos) {
+        this.jefeProyectos = jefeProyectos;
     }
     public Set getProyectoSedes() {
         return this.proyectoSedes;

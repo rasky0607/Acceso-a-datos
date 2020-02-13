@@ -40,11 +40,7 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-reverse-engineering>
-  <schema-selection match-catalog="gestionproyectos"/>
-  <table-filter match-name="departamento"/>
-  <table-filter match-name="empleado_datos_prof"/>
-  <table-filter match-name="proyecto_sede"/>
-  <table-filter match-name="empleado"/>
-  <table-filter match-name="sede"/>
+  <schema-selection match-catalog="gestionproyectos2"/>
   <table-filter match-name="proyecto"/>
+  <table-filter match-name="empleado"/>
 </hibernate-reverse-engineering>

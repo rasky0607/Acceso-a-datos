@@ -42,6 +42,8 @@ create table proyecto (
 create table jefe_proyecto(
   dni char(9) not null,
   id_proy integer,
+  f_inicio date not null,
+  f_fin date,
   primary key(dni,id_proy),
   foreign key fk_empleadojefe_proyecto_empl(dni) references empleado(dni),
   foreign key fk_idproyecto_proyecto(id_proy) references proyecto(id_proy)

@@ -41,10 +41,10 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="gestionproyectos"/>
-  <table-filter match-name="departamento"/>
-  <table-filter match-name="empleado_datos_prof"/>
   <table-filter match-name="proyecto_sede"/>
+  <table-filter match-name="proyecto"/>
+  <table-filter match-name="jefe_proyecto"/>
   <table-filter match-name="empleado"/>
   <table-filter match-name="sede"/>
-  <table-filter match-name="proyecto"/>
+  <table-filter match-name="departamento"/>
 </hibernate-reverse-engineering>

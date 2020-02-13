@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 12-feb-2020 22:23:20 by Hibernate Tools 4.3.1 -->
+<!-- Generated 13-feb-2020 0:49:55 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="ORM.Sede" table="sede" catalog="gestionproyectos" optimistic-lock="version">
         <id name="idSede" type="java.lang.Integer">
